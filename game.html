@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap">
+		<style>
+			body { 
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;}
+
+
+            /*stile per la barra di caricamento*/
+            .progress-bar-container{
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              width: 400px; /* Larghezza del quadrato */
+              height: 400px; /* Altezza del quadrato */
+              transform: translate(-50%, -50%);
+              /* Utilizza l'immagine wood.jpg come sfondo */
+              background-image: url('wood.jpg');
+              background-size: cover; /* Adatta l'immagine per coprire interamente il contenitore */
+              background-repeat: no-repeat; /* Evita che l'immagine si ripeta */
+              display: flex;
+              flex-direction: column; /* Dispone gli elementi in colonna */
+              align-items: center; /* Centra verticalmente gli elementi */
+              justify-content: center; /* Centra orizzontalmente gli elementi */
+              padding: 20px; /* Aggiunge spazio interno */
+              /* border-radius: 10px; Angoli arrotondati (opzionale) */  
+            }
+            #progress-bar {
+            width: 300px; /* Larghezza della barra di caricamento */
+            height: 20px; /* Altezza della barra di caricamento */
+            margin-left: 20px; /* Spazio tra la scritta e la barra */
+            }
+ 
+            label {
+                color: rgb(250, 247, 247);
+                font-size: 2rem;
+                font-family: 'MedievalSharp', cursive;
+            }
+
+       
+		</style>
+	</head>
+	<body>
+
+    
+
+     <div id="score" style="position: absolute; top: 10px; right: 10px; color: white; font-size: 24px;">
+        000000
+     </div>
+     <div id="gameOver" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'MedievalSharp', cursive; color: red; font-size: 48px;">
+        GAME OVER
+     </div>
+     <div id="scoresContainer" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-30%, -50%); color: white; font-size: 24px;">
+        <!-- I punteggi verranno inseriti qui -->
+     </div>
+     <div id="gameOverOptions" style="display: none; position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%); font-family: 'MedievalSharp', cursive; color: white; font-size: 24px;">
+        
+        <button id="exit" style="font-size: 20px;  font-family: 'MedievalSharp', cursive;">Esci</button>
+     </div>
+
+     <!--schermata di caricamento-->
+      <div class="progress-bar-container" id="loading-screen">
+             <label for="progress-bar">Caricamento...</label>
+             <progress id="progress-bar" value="0" max="100"></progress>
+      </div>
+		
+      <script type="module" src="/main.js"></script>
+       
+    </body>
+</html>

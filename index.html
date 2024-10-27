@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WOOD BOX GAME</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap"> 
+    <style>
+        body, html {
+            margin: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Stile per il canvas */
+        #animationCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Stile per il pulsante */
+        #startButton {
+            z-index: 1;
+            padding: 20px 40px;
+            font-size: 40px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'MedievalSharp', cursive; 
+            text-transform: uppercase;
+            opacity: 0; /* Nascondo il pulsante inizialmente */
+            transition: opacity 1s ease-in-out; /* Transizione */
+        }
+
+        #startButton:hover {
+            background-color: #45a049; /*cambia colore quando ci passi sopra*/
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas per l'animazione -->
+    <canvas id="animationCanvas"></canvas>
+
+    <!-- Pulsante -->
+    <button id="startButton">INIZIA GIOCO</button>
+
+    <script>
+        const canvas = document.getElementById('animationCanvas');
+        const start = canvas.getContext('2d');
+
+        // Dimensioni del canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Ridimensionamento della finestra
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initCubes(); 
+        });
+
+    
+        let cubes = [];
+
+        let cubeImage = new Image();
+        cubeImage.src = 'wood.jpg'; 
+
+        let backgroundImage = new Image();
+        backgroundImage.src = 'borgo2.jpg'; 
+
+        // Contatore immagini
+        let imagesLoaded = 0;
+        //Avvia l'animazione quando le immagini sono caricate
+        function checkImagesLoaded() {
+            imagesLoaded++;
+            if (imagesLoaded === 2) {
+                initCubes();
+                animate();
+            }
+        }
+
+        cubeImage.onload = checkImagesLoaded;
+        backgroundImage.onload = checkImagesLoaded;
+
+        function initCubes() {
+            cubes = [];
+            for (let i = 0; i < 5; i++) {
+                cubes.push({
+                    x: canvas.width + i * 200, //Separa i cubi
+                    y: canvas.height * (5 / 6), //Posiziona i cubi per farli poggiare sulla nuova base
+                    width: 50,
+                    height: 50,
+                    speed: 2 + Math.random() * 3
+                });
+            }
+        }
+
+        function animate() {
+            start.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Disegno l'immagine di sfondo nella parte superiore
+            start.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height * (5 / 6));
+
+            // Disegno il piano nero 
+            start.fillStyle = '#696969'; 
+            start.fillRect(0, canvas.height * (5 / 6), canvas.width, canvas.height / 6);
+
+            // DisegnO i cubi con la texture
+            cubes.forEach(cube => {
+                cube.x -= cube.speed;
+
+                if (cube.x + cube.width < 0) {
+                    cube.x = canvas.width;
+                }
+
+                start.drawImage(cubeImage, cube.x, cube.y - cube.height, cube.width, cube.height);
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Pulsante con Fade-in
+        setTimeout(function() {
+            const startButton = document.getElementById('startButton');
+            startButton.style.opacity = 1;
+        }, 2000);
+
+        // Evento click sul pulsante
+        document.getElementById('startButton').addEventListener('click', function() {
+            window.location.href = 'game.html';  
+        });
+    </script>
+</body>
+</html>
